@@ -15,9 +15,10 @@ class MainPage(webapp2.RequestHandler):
                                       'Partly Cloudy', 'Partly Sunny', 
                                       'Mostly Sunny', 'Sunny'])
 
+        self.response.write('<title>What\'s the weather, pup?</title>')
         self.response.write(
             '<h1>' + city + '\'s weather is ' + condition + ' and ' + str(temp) + '°C.</h1>'
-            '<img src="img/sleepy-pup.jpg">'
+            '<img src="img/sleepy-pup.jpg"><br>'
             '''<a href="https://www.flickr.com/photos/hand-nor-glove/378065479/">
                  hand-nor-glove CC BY-NC-ND 2.0
                </a>''')
