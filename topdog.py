@@ -32,7 +32,10 @@ class MainPage(webapp2.RequestHandler):
                   'licence': "hand-nor-glove CC BY-NC_ND 2.0"}, 
                  {'img': "img/rain-pup.jpg",
                   'url': "https://www.flickr.com/photos/alleykitten/3250509977/",
-                  'licence': "alleykitten CC BY-NC-ND 2.0"}]
+                  'licence': "alleykitten CC BY-NC-ND 2.0"},
+                 {'img': "img/snow-pup.jpg",
+                  'url': "https://www.flickr.com/photos/aukirk/16623977151/",
+                  'licence': "aukirk CC BY 2.0"}]
 
         template_values = {
             'city': city,
