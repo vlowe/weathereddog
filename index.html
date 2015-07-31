@@ -1,0 +1,11 @@
+<!DOCTYPE html>
+{% autoescape true %}
+<html>
+  <title>What's the weather, pup?</title>
+  <body>
+    <h1>{{city}}'s weather is {{condition}} and {{temp}}°C.</h1>
+    <img src="{{puppy.img}}"><br>
+    <a href="{{puppy.url}}"> {{puppy.licence}}</a>
+  </body>
+</html>
+{% endautoescape %}
