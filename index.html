@@ -3,7 +3,12 @@
 <html>
   <title>What's the weather, pup?</title>
   <body>
-    <h1>{{city}}'s weather is {{condition}} and {{temp}}°C.</h1>
+      <form action="/" method="post">
+          <h1>What's the weather in:
+              <input name="place" type="content" />
+              <input type="submit" style="position: absolute; left: -9999px"/>?</h1>
+      </form>
+      <h1>In {{city}} ({{country}}), it's {{condition}} and {{temp}}°C.</h1>
     <img src="{{puppy.img}}"><br>
     <a href="{{puppy.url}}"> {{puppy.licence}}</a>
   </body>
