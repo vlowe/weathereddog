@@ -6,6 +6,7 @@ import jinja2
 import json
 import os
 import random
+import urllib
 import webapp2
 
 
@@ -36,9 +37,10 @@ class MainPage(webapp2.RequestHandler):
 
     def post(self):
         # remove white space in input city
-        city = cgi.escape(self.request.get('place').replace(" ", ""))
+        field = {"q" : cgi.escape(self.request.get('place').replace(" ", ""))}
+        city = urllib.urlencode(field)
+        url = "http://api.openweathermap.org/data/2.5/weather?" + city
 
-        url = "http://api.openweathermap.org/data/2.5/weather?q=" + city
         template_values = get_weather(url)
         fetch_weather = urlfetch.fetch(url)
 
