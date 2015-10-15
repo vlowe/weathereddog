@@ -57,7 +57,7 @@ def get_weather(url):
             weather_dict = json.loads(fetch_weather.content)
             city = weather_dict["name"]
             country = weather_dict["sys"]["country"]
-            temp = weather_dict["main"]["temp"] - 273.15
+            temp = round(weather_dict["main"]["temp"] - 273.15, 1)
             condition = weather_dict["weather"][0]["main"]
 
         template_values = {
