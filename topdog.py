@@ -29,7 +29,8 @@ PUPPIES = [{'img': "img/sleepy-pup.jpg",
 class MainPage(webapp2.RequestHandler):
 
     def get(self):
-        url = "http://api.openweathermap.org/data/2.5/weather?q=Sydney"
+        url = "http://api.openweathermap.org/data/2.5/weather?q=Sydney" + \
+                "&APPID=cf62fd8aa01dd3ebeada9cdec7ff6f8a"
         template_values = get_weather(url)
 
         template = JINJA_ENVIRONMENT.get_template('index.html')
@@ -39,7 +40,8 @@ class MainPage(webapp2.RequestHandler):
         # remove white space in input city
         field = {"q" : cgi.escape(self.request.get('place').replace(" ", ""))}
         city = urllib.urlencode(field)
-        url = "http://api.openweathermap.org/data/2.5/weather?" + city
+        url = "http://api.openweathermap.org/data/2.5/weather?" + city + \
+                "&APPID=cf62fd8aa01dd3ebeada9cdec7ff6f8a"
 
         template_values = get_weather(url)
         fetch_weather = urlfetch.fetch(url)
