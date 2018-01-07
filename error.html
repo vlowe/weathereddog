@@ -1,0 +1,30 @@
+<!DOCTYPE html> {% autoescape true %}
+<html>
+
+<head>
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-108063468-1"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+
+        gtag('config', 'UA-108063468-1');
+    </script>
+    <title>What's the weather, pup?</title>
+</head>
+
+<body>
+    <form action="/" method="post">
+        <h1>Sorry, there is a {{error}} error.
+            <br>What's the weather in:
+            <input name="place" type="content" />
+            <input type="submit" style="position: absolute; left: -9999px" />?</h1>
+        <img src="img/sad-pup.jpg">
+        <br>
+        <a href="https://www.flickr.com/photos/ophilos/32973531360/"> Christos Loufopoulos CC BY-NC_ND 2.0</a>
+    </form>
+</body>
+
+</html>
+{% endautoescape %}

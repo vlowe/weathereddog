@@ -42,7 +42,10 @@ class MainPage(webapp2.RequestHandler):
     def get(self):
         url = "http://api.openweathermap.org/data/2.5/weather?q=Sydney" + \
             "&APPID=cf62fd8aa01dd3ebeada9cdec7ff6f8a"
-        template_values = get_weather(url)
+
+        weather_response = urlfetch.fetch(url)
+
+        template_values = get_weather(weather_response.content)
 
         template = JINJA_ENVIRONMENT.get_template('index.html')
         self.response.write(template.render(template_values))
@@ -54,37 +57,43 @@ class MainPage(webapp2.RequestHandler):
         url = "http://api.openweathermap.org/data/2.5/weather?" + city + \
             "&APPID=cf62fd8aa01dd3ebeada9cdec7ff6f8a"
 
-        template_values = get_weather(url)
+        weather_response = urlfetch.fetch(url)
 
-        template = JINJA_ENVIRONMENT.get_template('index.html')
-        self.response.write(template.render(template_values))
+        if weather_response.status_code != 200:
+            template = JINJA_ENVIRONMENT.get_template('error.html')
+            self.response.write(template.render(
+                {'error': weather_response.status_code}))
+        else:
+            template_values = get_weather(weather_response.content)
+            template = JINJA_ENVIRONMENT.get_template('index.html')
+            self.response.write(template.render(template_values))
 
 
-def get_weather(url):
-    fetch_weather = urlfetch.fetch(url)
+def get_weather(weather_response_content):
+    weather_dict = json.loads(weather_response_content)
+    city = weather_dict["name"]
+    country = weather_dict["sys"]["country"]
+    temp = round(weather_dict["main"]["temp"] - 273.15, 1)
+    condition = weather_dict["weather"][0]["main"]
 
-    if fetch_weather.status_code == 200:
-        weather_dict = json.loads(fetch_weather.content)
-        city = weather_dict["name"]
-        country = weather_dict["sys"]["country"]
-        temp = round(weather_dict["main"]["temp"] - 273.15, 1)
-        condition = weather_dict["weather"][0]["main"]
+    displayed_puppy = get_puppy(condition)
 
-    displayed_puppy = PUPPIES[0]
-
-    for puppy in PUPPIES:
-        if puppy['weather'] == condition.lower():
-            displayed_puppy = puppy
-
-    template_values = {
+    weather_values = {
         'city': city,
         'country': country,
         'temp': temp,
         'condition': condition,
         'puppy': displayed_puppy
     }
+    return weather_values
 
-    return template_values
+
+def get_puppy(condition):
+    displayed_puppy = PUPPIES[0]
+    for puppy in PUPPIES:
+        if puppy['weather'] == condition.lower():
+            displayed_puppy = puppy
+    return displayed_puppy
 
 
 app = webapp2. WSGIApplication([
