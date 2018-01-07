@@ -55,7 +55,6 @@ class MainPage(webapp2.RequestHandler):
             "&APPID=cf62fd8aa01dd3ebeada9cdec7ff6f8a"
 
         template_values = get_weather(url)
-        fetch_weather = urlfetch.fetch(url)
 
         template = JINJA_ENVIRONMENT.get_template('index.html')
         self.response.write(template.render(template_values))
