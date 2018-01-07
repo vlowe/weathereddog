@@ -5,7 +5,6 @@ from google.appengine.api import urlfetch
 import jinja2
 import json
 import os
-import random
 import urllib
 import webapp2
 
@@ -18,13 +17,20 @@ JINJA_ENVIRONMENT = jinja2.Environment(
 
 PUPPIES = [{'img': "img/sleepy-pup.jpg", 
             'url': "https://www.flickr.com/photos/hand-nor-glove/378065479/", 
-            'licence': "hand-nor-glove CC BY-NC_ND 2.0"}, 
+            'licence': "hand-nor-glove CC BY-NC_ND 2.0",
+            'weather': "sleep"}, 
            {'img': "img/rain-pup.jpg",
             'url': "https://www.flickr.com/photos/alleykitten/3250509977/",
-            'licence': "alleykitten CC BY-NC-ND 2.0"},
+            'licence': "alleykitten CC BY-NC-ND 2.0",
+            'weather': "rain"},
            {'img': "img/snow-pup.jpg",
             'url': "https://www.flickr.com/photos/aukirk/16623977151/",
-            'licence': "aukirk CC BY 2.0"}]
+            'licence': "aukirk CC BY 2.0",
+            'weather': "clear"},  # to do: get proper Clear pup picture
+            {'img': "img/mist-pup.jpg",
+            'url': "https://www.flickr.com/photos/sonstroem/38762487242/",
+            'licence': "sonstroem CC BY 2.0",
+            'weather' : "mist"}]
 
 class MainPage(webapp2.RequestHandler):
 
@@ -60,12 +66,18 @@ def get_weather(url):
             temp = round(weather_dict["main"]["temp"] - 273.15, 1)
             condition = weather_dict["weather"][0]["main"]
 
+        displayed_puppy = PUPPIES[0]
+
+        for puppy in PUPPIES:
+            if puppy['weather'] == condition.lower():
+                displayed_puppy = puppy
+
         template_values = {
             'city': city,
             'country': country,
             'temp': temp,
             'condition': condition,
-            'puppy': random.choice(PUPPIES)
+            'puppy': displayed_puppy
         }
 
         return template_values
