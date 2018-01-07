@@ -40,33 +40,31 @@ PUPPIES = [{'img': "img/sleepy-pup.jpg",
 class MainPage(webapp2.RequestHandler):
 
     def get(self):
-        url = "http://api.openweathermap.org/data/2.5/weather?q=Sydney" + \
-            "&APPID=cf62fd8aa01dd3ebeada9cdec7ff6f8a"
-
-        weather_response = urlfetch.fetch(url)
-
-        template_values = get_weather(weather_response.content)
-
-        template = JINJA_ENVIRONMENT.get_template('index.html')
-        self.response.write(template.render(template_values))
+        response = get_url('Sydney')
+        self.response.write(response)
 
     def post(self):
-        # remove white space in input city
-        field = {"q": cgi.escape(self.request.get('place').replace(" ", ""))}
-        city = urllib.urlencode(field)
-        url = "http://api.openweathermap.org/data/2.5/weather?" + city + \
-            "&APPID=cf62fd8aa01dd3ebeada9cdec7ff6f8a"
+        response = get_url(self.request.get('place').replace(" ", ""))
+        self.response.write(response)
 
-        weather_response = urlfetch.fetch(url)
 
-        if weather_response.status_code != 200:
-            template = JINJA_ENVIRONMENT.get_template('error.html')
-            self.response.write(template.render(
-                {'error': weather_response.status_code}))
-        else:
-            template_values = get_weather(weather_response.content)
-            template = JINJA_ENVIRONMENT.get_template('index.html')
-            self.response.write(template.render(template_values))
+def get_url(place):
+    # remove white space in input city
+    field = {"q": cgi.escape(place)}
+    city = urllib.urlencode(field)
+    url = "http://api.openweathermap.org/data/2.5/weather?" + city + \
+        "&APPID=cf62fd8aa01dd3ebeada9cdec7ff6f8a"
+
+    weather_response = urlfetch.fetch(url)
+
+    if weather_response.status_code != 200:
+        template = JINJA_ENVIRONMENT.get_template('error.html')
+        return template.render(
+            {'error': weather_response.status_code})
+    else:
+        template_values = get_weather(weather_response.content)
+        template = JINJA_ENVIRONMENT.get_template('index.html')
+        return template.render(template_values)
 
 
 def get_weather(weather_response_content):
