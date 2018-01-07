@@ -26,11 +26,15 @@ PUPPIES = [{'img': "img/sleepy-pup.jpg",
            {'img': "img/snow-pup.jpg",
             'url': "https://www.flickr.com/photos/aukirk/16623977151/",
             'licence': "aukirk CC BY 2.0",
-            'weather': "clear"},  # to do: get proper Clear pup picture
+            'weather': "snow"},
             {'img': "img/mist-pup.jpg",
             'url': "https://www.flickr.com/photos/sonstroem/38762487242/",
             'licence': "sonstroem CC BY 2.0",
-            'weather' : "mist"}]
+            'weather' : "mist"},
+            {'img': "img/clear-pup.jpg",
+            'url': "https://www.flickr.com/photos/31867959@N04/15130078190/",
+            'licence' : "Dallas Krentzel CC By 2.0",
+            'weather' : "clear"}]
 
 class MainPage(webapp2.RequestHandler):
 
