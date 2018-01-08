@@ -72,7 +72,7 @@ def get_weather(weather_response_content):
     city = weather_dict["name"]
     country = weather_dict["sys"]["country"]
     temp = round(weather_dict["main"]["temp"] - 273.15, 1)
-    condition = weather_dict["weather"][0]["main"]
+    condition = weather_dict["weather"][0]["description"]
 
     displayed_puppy = get_puppy(condition)
 
