@@ -15,13 +15,9 @@ JINJA_ENVIRONMENT = jinja2.Environment(
     autoescape=True)
 
 
-PUPPIES = [{'img': "img/sleepy-pup.jpg",
-            'url': "https://www.flickr.com/photos/hand-nor-glove/378065479/",
-            'licence': "This Year's Love CC BY-NC_ND 2.0",
-            'weather': "sleep"},
-           {'img': "img/rain-pup.jpg",
-            'url': "https://www.flickr.com/photos/alleykitten/3250509977/",
-            'licence': "Stacey Taylor-Kane CC BY-NC-ND 2.0",
+PUPPIES = [{'img': "img/rain-pup.jpg",
+            'url': "https://www.flickr.com/photos/smalleraperture/3007432892/",
+            'licence': "Eric Osmundson CC BY-NC-SA 2.0",
             'weather': "rain"},
            {'img': "img/snow-pup.jpg",
             'url': "https://www.flickr.com/photos/aukirk/16623977151/",
@@ -33,8 +29,12 @@ PUPPIES = [{'img': "img/sleepy-pup.jpg",
             'weather': "mist"},
            {'img': "img/clear-pup.jpg",
             'url': "https://www.flickr.com/photos/31867959@N04/15130078190/",
-            'licence': "Dallas Krentzel CC By 2.0",
-            'weather': "clear"}]
+            'licence': "Dallas Krentzel CC BY 2.0",
+            'weather': "clear"},
+            {'img': "img/cloud-pup.jpg",
+            'url': "https://www.flickr.com/photos/ronk-foto/37235466596/",
+            'licence': "Ron Kretschmann CC BY-NC-SA 2.0",
+            'weather': "cloud"}]
 
 
 class MainPage(webapp2.RequestHandler):
@@ -89,7 +89,7 @@ def get_weather(weather_response_content):
 def get_puppy(condition):
     displayed_puppy = PUPPIES[0]
     for puppy in PUPPIES:
-        if puppy['weather'] == condition.lower():
+        if puppy['weather'] in condition.lower(): #condition.lower():
             displayed_puppy = puppy
     return displayed_puppy
 
