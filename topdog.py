@@ -4,6 +4,7 @@ import cgi
 from google.appengine.api import urlfetch
 import jinja2
 import json
+import logging
 import os
 import urllib
 import webapp2
@@ -31,7 +32,7 @@ PUPPIES = [{'img': "img/rain-pup.jpg",
             'url': "https://www.flickr.com/photos/31867959@N04/15130078190/",
             'licence': "Dallas Krentzel CC BY 2.0",
             'weather': "clear"},
-            {'img': "img/cloud-pup.jpg",
+           {'img': "img/cloud-pup.jpg",
             'url': "https://www.flickr.com/photos/ronk-foto/37235466596/",
             'licence': "Ron Kretschmann CC BY-NC-SA 2.0",
             'weather': "cloud"}]
@@ -44,16 +45,16 @@ class MainPage(webapp2.RequestHandler):
         self.response.write(response)
 
     def post(self):
-        response = get_url(self.request.get('place').replace(" ", ""))
+        response = get_url(self.request.get('place'))
         self.response.write(response)
 
 
 def get_url(place):
-    # remove white space in input city
     field = {"q": cgi.escape(place)}
     city = urllib.urlencode(field)
     url = "http://api.openweathermap.org/data/2.5/weather?" + city + \
         "&APPID=cf62fd8aa01dd3ebeada9cdec7ff6f8a"
+    logging.info(url)
 
     weather_response = urlfetch.fetch(url)
 
@@ -89,7 +90,7 @@ def get_weather(weather_response_content):
 def get_puppy(condition):
     displayed_puppy = PUPPIES[0]
     for puppy in PUPPIES:
-        if puppy['weather'] in condition.lower(): #condition.lower():
+        if puppy['weather'] in condition.lower():  # condition.lower():
             displayed_puppy = puppy
     return displayed_puppy
 
